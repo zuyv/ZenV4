@@ -6359,7 +6359,7 @@ run(function()
 	local Targets
 	local MovingTornadoDistance
 	local UseTornandos
-	BetterRamil = vape.Categories.Support:CreateModule({
+	BetterRamil = vape.Categories.Legit:CreateModule({
 		Name = "AutoRamil",
 		Tooltip = 'Automatically uses Ramil\'s Tornado ability',
 		Function = function(callback)
