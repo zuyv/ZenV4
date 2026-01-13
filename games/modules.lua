@@ -1266,7 +1266,7 @@ end)
 
 run(function()
 		local MHA
-		MHA = vape.Categories.Utility:CreateModule({
+		MHA = vape.Categories.Legit:CreateModule({
 			Name = "MatchHistoryViewer",
 			Function = function(callback)
 				if callback then
@@ -2454,7 +2454,7 @@ run(function()
 end)
 run(function()
 	local LP 
-	 LP = vape.Categories.Utility:CreateModule({
+	 LP = vape.Categories.Exploits:CreateModule({
 		Name = "LeaveParty",
 		Function = function(callback)																									
 			if callback then
@@ -5831,9 +5831,9 @@ run(function()
 	end
 
 
-    AutoWin = vape.Categories.Blatant:CreateModule({
+    AutoWin = vape.Categories.Exploits:CreateModule({
         Name = "AutoWin",
-        Tooltip = "makes you go into a empty game and win for you!",
+        Tooltip = "Makes you go into a empty game and win!",
         Function = function(callback)
             if not callback then
            	 	vape:CreateNotification("AutoWin", "Disabled next game!", 4.5, "warning")
@@ -5856,7 +5856,7 @@ run(function()
 	local ZephyrExploit
 	local zepcontroller = require(lplr.PlayerScripts.TS.controllers.games.bedwars.kit.kits['wind-walker']['wind-walker-controller'])
 	local old, old2
-	ZephyrExploit = vape.Categories.Utility:CreateModule({
+	ZephyrExploit = vape.Categories.Exploits:CreateModule({
 		Name = 'ZephyrExploit',
 		Function = function(callback)
 			if callback then
@@ -6146,7 +6146,7 @@ run(function()
 	task.spawn(function()
 		projectileRemote = bedwars.Client:Get(remotes.FireProjectile).instance
 	end)
-	BetterLassy = vape.Categories.Utility:CreateModule({
+	BetterLassy = vape.Categories.Legit:CreateModule({
 		Name = 'AutoLassy',
 		Tooltip = 'makes you be semi-blatant at lassy',
 		Function = function(callback)
@@ -6229,4 +6229,762 @@ run(function()
 		Name = "Sorts",
 		List = {'Damage','Threat','Kit','Health','Angle'}
 	})
+end)
+
+run(function()
+    local VanessaCharger    
+    local old
+	local old2
+    local lastChargeTime = 0
+    
+    VanessaCharger = vape.Categories.Blatant:CreateModule({
+        Name = 'VanessaCharger',
+        Function = function(callback)
+            if callback then
+				local currentTime = tick()
+                old = bedwars.TripleShotProjectileController.getChargeTime
+                bedwars.TripleShotProjectileController.getChargeTime = function(self)
+                	local OldNow = tick()
+                    local delayAmount = 0
+                    if OldNow - lastChargeTime < delayAmount then
+                        return oldGetChargeTime(self)
+                    end
+                            
+                    lastChargeTime = currentTime
+                    return 0
+                end
+				old2 = bedwars.TripleShotProjectileController.overchargeStartTime
+                bedwars.TripleShotProjectileController.overchargeStartTime = tick()
+            else
+				bedwars.TripleShotProjectileController.overchargeStartTime = old2
+                bedwars.TripleShotProjectileController.getChargeTime = old
+                lastChargeTime = 0
+				old = nil
+				old2 = nil
+            end
+        end,
+        Tooltip = 'Auto charges Vanessa to triple shot instantly'
+    })
+end)
+
+run(function()
+	local BetterMetal
+	local StreamerMode
+	local Delay
+	local Animation
+	local Distance
+	local Limits
+	local Legit
+	BetterMetal = vape.Categories.Legit:CreateModule({
+		Name = "AutoMetal",
+		Tooltip = 'Automatically collects metals around you',
+		Function = function(callback)
+			if store.equippedKit ~= "metal_detector" then
+				vape:CreateNotification("BetterMetal","Kit required only!",8,"warning")
+				return
+			end
+			task.spawn(function()
+				while BetterMetal.Enabled do
+					if not entitylib.isAlive then task.wait(0.1); continue end
+					local character = entitylib.character
+					if not character or not character.RootPart then task.wait(0.1); continue end
+					local tool = (store and store.hand and store.hand.tool) and store.hand.tool or nil
+					if not tool or tool.Name ~= "metal_detector" then task.wait(0.5); continue end
+					local localPos = character.RootPart.Position
+					local metals = collectionService:GetTagged("hidden-metal")
+					for _, obj in pairs(metals) do
+						if obj:IsA("Model") and obj.PrimaryPart then
+							local metalPos = obj.PrimaryPart.Position
+							local distance = (localPos - metalPos).Magnitude
+							local range = Legit.Enabled and 10 or (Distance.Value or 8)
+							if distance <= range then
+								if StreamerMode.Enabled then
+									local Key = obj:FindFirstChild('hidden-metal-prompt').KeyboardKeyCode
+									vim:SendKeyEvent(true, Key, false, game)
+									task.wait(obj:FindFirstChild('hidden-metal-prompt').HoldDuration + math.random())
+									vim:SendKeyEvent(false, Key, false, game)
+								else
+								local waitTime = Legit.Enabled and .854 or (1 / (Delay.GetRandomValue and Delay:GetRandomValue() or 1))
+								task.wait(waitTime)
+								if Legit.Enabled or Animation.Enabled then
+									bedwars.GameAnimationUtil:playAnimation(lplr, bedwars.AnimationType.SHOVEL_DIG)
+									bedwars.SoundManager:playSound(bedwars.SoundList.SNAP_TRAP_CONSUME_MARK)
+								end
+								pcall(function()
+									bedwars.Client:Get('CollectCollectableEntity'):SendToServer({id = obj:GetAttribute("Id")})
+								end)
+								task.wait(0.1)
+								end
+
+							end
+						end
+					end
+					task.wait(0.1)
+				end
+			end)
+		end
+	})
+	Limits = BetterMetal:CreateToggle({Name='Limit To Item',Default=false})
+	StreamerMode = BetterMetal:CreateToggle({Name='Streamer Mode',Default=false})
+	Distance = BetterMetal:CreateSlider({Name='Range',Min=6,Max=12,Default=8})
+	Delay = BetterMetal:CreateTwoSlider({
+		Name = "Delay",
+		Min = 0,
+		Max = 2,
+		DefaultMin = 0.4,
+		DefaultMax = 1,
+		Suffix = 's',
+        Decimal = 10,	
+	})
+	Animation = BetterMetal:CreateToggle({Name='Animations',Default=true})
+	Legit = BetterMetal:CreateToggle({
+		Name='Legit',
+		Default=true,
+		Darker=true,
+		Function = function(v)
+			Animation.Object.Visible = (not v)
+			Delay.Object.Visible = (not v)
+			Distance.Object.Visible = (not v)
+			Limits.Object.Visible = (not v)
+		end
+	})
+end)
+
+run(function()
+	local BetterRamil
+	local Distance
+	local Sorts
+	local Angle
+	local MaxTargets
+	local Targets
+	local MovingTornadoDistance
+	local UseTornandos
+	BetterRamil = vape.Categories.Support:CreateModule({
+		Name = "AutoRamil",
+		Tooltip = 'Automatically uses Ramil\'s Tornado ability',
+		Function = function(callback)
+			if store.equippedKit ~= "airbender" then
+				vape:CreateNotification("BetterRamil","Kit required only!",8,"warning")
+				return
+			end
+			if callback then
+				repeat
+		            local plrs = entitylib.AllPosition({
+		                Range = AttackRange.Value,
+		                Wallcheck = Targets.Walls.Enabled,
+		                Part = "RootPart",
+		                Players = Targets.Players.Enabled,
+		                NPCs = Targets.NPCs.Enabled,
+		                Limit = MaxTargets.Value,
+		                Sort = sortmethods[Sorts.Value]
+		            })
+					local castplrs = nil
+
+					if UseTornandos.Enabled then
+						castplrs = entitylib.AllPosition({
+							Range = MovingTornadoDistance.Value,
+							Wallcheck = Targets.Walls.Enabled,
+							Part = "RootPart",
+							Players = Targets.Players.Enabled,
+							NPCs = Targets.NPCs.Enabled,
+							Limit = MaxTargets.Value,
+							Sort = sortmethods[Sorts.Value]
+		            	})
+					end
+		
+		            local char = entitylib.character
+		            local root = char.RootPart
+		
+		            if plrs then
+		                local ent = plrs[1]
+		                if ent and ent.RootPart then
+		                    local delta = ent.RootPart.Position - root.Position
+		                    local localFacing = root.CFrame.LookVector * Vector3.new(1, 0, 1)
+		                    local angle = math.acos(localFacing:Dot((delta * Vector3.new(1, 0, 1)).Unit))
+		                    if angle > (math.rad(Angle.Value) / 2) then continue end
+							if bedwars.AbilityController:canUseAbility('airbender_tornado') then
+								bedwars.AbilityController:useAbility('airbender_tornado')
+							end
+		                end
+		            end
+					if castplrs then
+		                local ent = castplrs[1]
+		                if ent and ent.RootPart then
+							if UseTornandos.Enabled then
+								if bedwars.AbilityController:canUseAbility('airbender_moving_tornado') then
+									bedwars.AbilityController:useAbility('airbender_moving_tornado')
+								end
+							end
+						end
+					end
+					task.wait(0.2)
+				until not BetterRamil.Enabled
+			end
+
+
+		end
+	})
+	Targets = BetterRamil:CreateTargets({Players = true,NPCs = false,Walls = true})
+    Angle = BetterRamil:CreateSlider({
+        Name = "Angle",
+        Min = 0,
+        Max = 360,
+        Default = 180
+    })
+	Sorts = BetterRamil:CreateDropdown({
+		Name = "Sorts",
+		List = {'Damage','Threat','Kit','Health','Angle'}
+	})
+	MaxTargets = BetterRamil:CreateSlider({
+		Name = "Max Targets",
+		Min = 1,
+		Max = 3,
+		Default = 2
+	})
+	Distance = BetterRamil:CreateSlider({
+		Name = "Distance",
+		Min = 1,
+		Max = 25,
+		Default = 18,
+		Suffix = function(v)
+			if v <= 1 then
+				return 'stud'
+			else
+				return 'studs'
+			end
+		end
+	})
+	MovingTornadoDistance = BetterRamil:CreateSlider({
+		Name = "Tornado Distance",
+		Min = 1,
+		Max = 31,
+		Default = 18,
+		Suffix = function(v)
+			if v <= 1 then
+				return 'stud'
+			else
+				return 'studs'
+			end
+		end
+	})
+	UseTornandos = BetterRamil:CreateToggle({Name='Use Moving Tornado\'s',Default=false,Function=function(v) MovingTornadoDistance.Object.Visible = v end})
+end)
+
+run(function()	
+
+	NM = vape.Categories.Render:CreateModule({
+		Name = 'NightmareEmote',
+		Tooltip = 'Client-Sided VFX, Server-Sided Animation',
+		Function = function(callback)
+			if callback then				
+				local CharForNM = lplr.Character
+				
+				if not CharForNM then return end
+				
+				local NightmareEmote = replicatedStorage:WaitForChild("Assets"):WaitForChild("Effects"):WaitForChild("NightmareEmote"):Clone()
+				asset = NightmareEmote
+				NightmareEmote.Parent = game.Workspace
+				lastPosition = CharForNM.PrimaryPart and CharForNM.PrimaryPart.Position or Vector3.new()
+				
+				task.spawn(function()
+					while asset ~= nil do
+						local currentPosition = CharForNM.PrimaryPart and CharForNM.PrimaryPart.Position
+						if currentPosition and (currentPosition - lastPosition).Magnitude > 0.1 then
+							asset:Destroy()
+							asset = nil
+							NM:Toggle()
+							break
+						end
+						lastPosition = currentPosition
+						NightmareEmote:SetPrimaryPartCFrame(CharForNM.LowerTorso.CFrame + Vector3.new(0, -2, 0))
+						task.wait(0.1)
+					end
+				end)
+				
+				local NMDescendants = NightmareEmote:GetDescendants()
+				local function PartStuff(Prt)
+					if Prt:IsA("BasePart") then
+						Prt.CanCollide = false
+						Prt.Anchored = true
+					end
+				end
+				for i, v in ipairs(NMDescendants) do
+					PartStuff(v, i - 1, NMDescendants)
+				end
+				local Outer = NightmareEmote:FindFirstChild("Outer")
+				if Outer then
+					tweenService:Create(Outer, TweenInfo.new(1.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1), {
+						Orientation = Outer.Orientation + Vector3.new(0, 360, 0)
+					}):Play()
+				end
+				local Middle = NightmareEmote:FindFirstChild("Middle")
+				if Middle then
+					tweenService:Create(Middle, TweenInfo.new(12.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1), {
+						Orientation = Middle.Orientation + Vector3.new(0, -360, 0)
+					}):Play()
+				end
+                anim = Instance.new("Animation")
+				anim.AnimationId = "rbxassetid://9191822700"
+				anim = CharForNM.Humanoid:LoadAnimation(anim)
+				anim:Play()
+			else 
+                if anim then 
+					anim:Stop()
+					anim = nil
+				end
+				if asset then
+					asset:Destroy() 
+					asset = nil
+				end
+			end
+		end
+	})
+end)
+
+run(function()
+    local PlayerLevel
+	local level 
+	local old
+
+	PlayerLevel = vape.Categories.Utility:CreateModule({
+        Name = 'SetPlayerLevel',
+		Tooltip = "Sets your player level to 1000 (client sided)",
+        Function = function(callback)
+			if callback then
+				old = lplr:GetAttribute("PlayerLevel")
+				lplr:SetAttribute("PlayerLevel", level.Value)
+			else
+				lplr:SetAttribute("PlayerLevel", old)
+				old = nil
+			end
+		end
+	})
+
+	level = PlayerLevel:CreateSlider({
+		Name = 'Player Level',
+		Min = 1,
+		Max = 1000,
+		Default = 100,
+		Function = function(val)
+			if PlayerLevel.Enabled then
+				lplr:SetAttribute("PlayerLevel", val)
+			end
+		end
+	})
+end)
+
+run(function()
+	local WoolChanger
+	local oldTexture
+	local oldColor
+	local OldMaterial
+	local oldColorBlock
+	local oldColorBlockColor
+	local oldWoolHotBar
+	local color
+	local Color = Color3.new(1,1,1)
+	local GUIEdit 
+	WoolChanger = vape.Categories.Blatant:CreateModule({
+		Name = 'WoolChanger',
+		Function = function(callback)
+			if callback then
+				local function getWorldFolder()
+					local Map = workspace:WaitForChild("Map", math.huge)
+					local Worlds = Map:WaitForChild("Worlds", math.huge)
+					if not Worlds then return nil end
+
+					return Worlds:GetChildren()[1] 
+				end
+				local worldFolder = getWorldFolder()
+				if not worldFolder then return end
+				local blocks = worldFolder:WaitForChild("Blocks")
+				local NewMaterial = Instance.new('MaterialVariant')
+				NewMaterial.Parent = cloneref(game:GetService('MaterialService'))
+				NewMaterial.Name = 'rbxassetid://16991768606'
+				NewMaterial.ColorMap  = 'rbxassetid://16991768606'
+				NewMaterial.StudsPerTile = 3
+				NewMaterial.RoughnessMap = 'rbxassetid://16991768606'
+				NewMaterial.BaseMaterial = 'Fabric'
+				task.spawn(function()
+					if not GUIEdit.Enabled then return end
+					repeat 
+						for i, v in lplr.PlayerGui.hotbar:GetDescendants() do
+							if v:IsA("ImageLabel") then
+								if v.Name == "1" then
+									if v.Image == "rbxassetid://7923577182" or v.Image == "rbxassetid://7923577311" or v.Image == "rbxassetid://7923578297" or v.Image == "rbxassetid://7923578297" or v.Image == "rbxassetid://6765309820" or v.Image == "rbxassetid://7923579098" or v.Image == "rbxassetid://7923577655" or v.Image == "rbxassetid://7923579263" or v.Image == "rbxassetid://7923579520" or v.Image == "rbxassetid://7923578762" or v.Image == "rbxassetid://7923578533" or v.Image == "rbxassetid://15380238075" then
+										oldColorBlock = v.Image
+										oldColorBlockColor = v.ImageColor3
+										v.Image = "rbxassetid://7923579263"
+										v.ImageColor3 = Color
+									end
+								end
+							end
+						end
+						task.wait(0.01)
+					until not WoolChanger.Enabled or not GUIEdit.Enabled
+				end)
+				WoolChanger:Clean(gameCamera:FindFirstChild("Viewmodel").ChildAdded:Connect(function(obj)
+					if string.find(obj.Name, "wool") then
+						for i, texture in obj:FindFirstChild('Handle'):GetChildren() do
+							if texture:IsA('Texture') then
+								oldTexture = texture.Texture
+								texture.Texture = "rbxassetid://16991768606"
+								oldColor = texture.Color3
+								texture.Color3 = Color
+							end
+						end
+					end
+				end))
+				WoolChanger:Clean(blocks.ChildAdded:Connect(function(obj)
+					if string.find(obj.Name, "wool") then
+						if obj:GetAttribute("PlacedByUserId") == lplr.UserId then
+							OldMaterial = obj.MaterialVariant
+							oldColorBlock = obj.Color
+							obj.MaterialVariant = "rbxassetid://16991768606"
+							obj.Color = Color
+						end
+					end
+				end))
+				WoolChanger:Clean(workspace.ChildAdded:Connect(function(obj)
+					if string.find(obj.Name, "wool") then
+						if obj:GetAttribute("PlacedByUserId") == lplr.UserId then
+							OldMaterial = obj.MaterialVariant
+							oldColorBlock = obj.Color
+							obj.MaterialVariant = "rbxassetid://16991768606"
+							obj.Color = Color
+						end
+					end
+				end))
+				WoolChanger:Clean(lplr.Character.ChildAdded:Connect(function(obj)
+					if string.find(obj.Name, "wool") then
+						for i, texture in obj:FindFirstChild('Handle'):GetChildren() do
+							if texture:IsA('Texture') then
+								oldTexture = texture.Texture
+								texture.Texture = "rbxassetid://16991768606"
+								oldColor = texture.Color3
+								texture.Color3 = Color
+							end
+						end
+					end
+				end))
+            else
+				for i, v in lplr.PlayerGui.hotbar:GetDescendants() do
+					if v:IsA("ImageLabel") then
+						if v.Name == "1" then
+							if v.Image == "rbxassetid://7923579263" then
+								v.Image = oldColorBlock
+								v.ImageColor3 = oldColorBlockColor
+								oldColorBlock = nil
+								oldColorBlockColor = nil
+							end
+						end
+					end
+				end
+				for i, obj in workspace:GetDescendants() do
+					if string.find(obj.Name, "wool") then
+						if obj:GetAttribute("PlacedByUserId") == lplr.UserId then
+							obj.MaterialVariant = OldMaterial
+							obj.Color = oldColorBlock
+							OldMaterial = nil
+							oldColor = nil
+						end
+					end
+				end
+			end
+		end,
+		Tooltip = 'Changes your blocks from a custom color(client only)'
+	})
+	color = WoolChanger:CreateColorSlider({
+		Name = "Wool Color",
+		Function = function(hue,sat,val)
+			if WoolChanger.Enabled then
+				local v1 = Color3.fromHSV(hue,sat,val)
+				local R = math.floor(v1.R * 255)
+				local G = math.floor(v1.G * 255)
+				local B = math.floor(v1.B * 255)
+				Color = Color3.fromRGB(R,G,B)
+			end
+		end
+	})
+	GUIEdit = WoolChanger:CreateToggle({
+		Name = "Hotbar Edit",
+		Tooltip = 'changer effects the hotbar lol',
+		Default = false,
+		Function = function(v)
+			repeat 
+				for i, v in lplr.PlayerGui.hotbar:GetDescendants() do
+					if v:IsA("ImageLabel") then
+						if v.Name == "1" then
+							if v.Image == "rbxassetid://7923577182" or v.Image == "rbxassetid://7923577311" or v.Image == "rbxassetid://7923578297" or v.Image == "rbxassetid://7923578297" or v.Image == "rbxassetid://6765309820" or v.Image == "rbxassetid://7923579098" or v.Image == "rbxassetid://7923577655" or v.Image == "rbxassetid://7923579263" or v.Image == "rbxassetid://7923579520" or v.Image == "rbxassetid://7923578762" or v.Image == "rbxassetid://7923578533" or v.Image == "rbxassetid://15380238075" then
+								oldColorBlock = v.Image
+								oldColorBlockColor = v.ImageColor3
+								v.Image = "rbxassetid://7923579263"
+								v.ImageColor3 = Color
+							end
+						end
+					end
+				end
+				task.wait(0.01)
+			until not WoolChanger.Enabled or not v
+		end
+	})
+end)
+
+run(function()
+	local RS 
+	RS = vape.Categories.Utility:CreateModule({
+		Name = "Stream Remover",
+		Tooltip = 'this is client only, disables everyones streamer mode',
+		Function = function(callback)
+			if callback then
+	
+				old = bedwars.GamePlayer.canSeeThroughDisguise
+				bedwars.GamePlayer.canSeeThroughDisguise = function()
+					return true
+				end
+			else
+				bedwars.GamePlayer.canSeeThroughDisguise = old
+				old = nil	
+			end
+		end
+	})
+end)
+
+run(function()
+	local DinoTamerExploit
+	DinoTamerExploit = vape.Categories.Exploits:CreateModule({
+		Name = "DinoTamerExploit",
+		Function = function(callback) 	
+			if callback then
+				repeat
+					bedwars.Client:Get("ConsumeItem"):SendToServer({item=replicatedStorage.Inventories[lplr.Name].dino_deploy})
+					replicatedStorage.rbxts_include.node_modules["@rbxts"].net.out._NetManaged.Dismount:FireServer()
+					task.wait()
+				until not DinoTamerExploit.Enabled
+			else
+				warn('disabled')
+			end
+		end
+	})
+end)
+
+run(function()
+	local BetterUma
+	local Range
+	local AutoSummon
+	local UHS
+	local UAS 
+	local Target
+	local Em
+	local Dim
+	local Delay
+	local projectileRemote = nil
+	task.spawn(function()
+		local s, err = pcall(function()
+			projectileRemote = bedwars.Client:Get(remotes.FireProjectile).instance
+		end)
+		if not s or err then
+			projectileRemote = {InvokeServer = function() end}
+			warn(err)
+		end
+	end)
+	local function FindDimGen(origin)
+		local obj, velo
+		for i, dims in workspace.ItemDrops:GetChildren() do
+			if dims:IsA("BasePart") then
+				if dims.Name == "diamond" then
+					local d = (dims.Position - origin).Magnitude
+					if Range.Value <= d then
+						obj = dims
+						velo = obj.AssemblyLinearVelocity.Magnitude
+					end
+				end
+			end
+		end
+		return obj, velo
+	end
+	local function FindEmGen(origin)
+		local obj, velo
+		for i, ems in workspace.ItemDrops:GetChildren() do
+			if ems:IsA("BasePart") then
+				if ems.Name == "emerald" then
+					local d = (ems.Position - origin).Magnitude
+					if Range.Value <= d then
+						obj = ems
+						velo = obj.AssemblyLinearVelocity.Magnitude
+					end
+				end
+			end
+		end
+		return obj,velo
+	end
+	local Meta = ""
+	local CanShoot = true
+	BetterUma = vape.Categories.Legit:CreateModule({
+		Name = "AutoUma",
+		Tooltip = 'Autouma by shooting spirits at emeralds and diamonds',
+		Function = function(callback)
+			if callback then
+				if store.equippedKit ~= "spirit_summoner" then
+					vape:CreateNotification("BetterUma","Kit required only!",8,"warning")
+					return
+				end
+				repeat
+						if AutoSummon.Enabled then
+							local stone = getItem("summon_stone")
+							if stone then
+								if UHS.Enabled and bedwars.AbilityController:canUseAbility("summon_heal_spirit") then
+									bedwars.AbilityController:useAbility("summon_heal_spirit")
+								end
+								if UAS.Enabled and bedwars.AbilityController:canUseAbility("summon_attack_spirit") then
+									bedwars.AbilityController:useAbility("summon_attack_spirit")
+								end
+								if UHS.Enabled and UAS.Enabled then
+									local heal = lplr:GetAttribute("ReadySummonedHealSpirits") or 0
+									local atk  = lplr:GetAttribute("ReadySummonedAttackSpirits") or 0
+
+									if heal ~= atk and bedwars.AbilityController:canUseAbility("change_spirit_affinity") then
+										bedwars.AbilityController:useAbility("change_spirit_affinity")
+									end
+								end
+							else
+								task.wait(0.1)
+								continue
+							end
+						end
+						if Target.Enabled then
+							if Em.Enabled then
+								local pos,spot = FindEmGen(entitylib.character.RootPart.Position)
+								if pos and CanShoot then
+									CanShoot = false
+									local staff = getItem("spirit_staff")
+									if  not staff then task.wait(0.1) continue end
+									if lplr:GetAttribute("ReadySummonedHealSpirits") > lplr:GetAttribute("ReadySummonedAttackSpirits") then
+										Meta = "heal_spirit"
+									else
+										Meta = "attack_spirit"
+									end
+									local meta = bedwars.ProjectileMeta[Meta]
+									local calc = prediction.SolveTrajectory(pos, meta.launchVelocity, meta.gravitationalAcceleration, spot, Vector3.zero, workspace.Gravity, 0, 0)
+									if calc then
+										local dir = CFrame.lookAt(pos, calc).LookVector * meta.launchVelocity
+										bedwars.ProjectileController:createLocalProjectile(meta, Meta, Meta, pos, nil, dir, {drawDurationSeconds = 0})
+										projectileRemote:InvokeServer(staff.tool, Meta, Meta, pos, pos, dir, httpService:GenerateGUID(true), {drawDurationSeconds = 0, shotId = httpService:GenerateGUID(false)}, workspace:GetServerTimeNow() - 0.045)     
+										task.wait(1 / Delay.GetRandomValue() + math.random())
+										CanShoot = true
+									end
+								else
+									task.wait(0.1)
+									continue
+								end
+							end
+							if Dim.Enabled then
+								local pos,spot = FindDimGen(entitylib.character.RootPart.Position)
+								if pos and CanShoot then
+									CanShoot = false
+									local staff = getItem("spirit_staff")
+									if  not staff then task.wait(0.1) continue end
+									if lplr:GetAttribute("ReadySummonedHealSpirits") > lplr:GetAttribute("ReadySummonedAttackSpirits") then
+										Meta = "heal_spirit"
+									else
+										Meta = "attack_spirit"
+									end
+									local meta = bedwars.ProjectileMeta[Meta]
+									local calc = prediction.SolveTrajectory(pos, meta.launchVelocity, meta.gravitationalAcceleration, spot, Vector3.zero, workspace.Gravity, 0, 0)
+									if calc then
+										
+										local dir = CFrame.lookAt(pos, calc).LookVector * meta.launchVelocity
+										bedwars.ProjectileController:createLocalProjectile(meta, Meta, Meta, pos, nil, dir, {drawDurationSeconds = 0})
+										projectileRemote:InvokeServer(staff.tool, Meta, Meta, pos, pos, dir, httpService:GenerateGUID(true), {drawDurationSeconds = 0, shotId = httpService:GenerateGUID(false)}, workspace:GetServerTimeNow() - 0.045)     
+										task.wait(1 / Delay.GetRandomValue() + math.random())
+										CanShoot = true
+									end
+								else
+									task.wait(0.1)
+									continue
+								end
+							end
+						end
+					task.wait(1 / Delay.GetRandomValue())
+				until not BetterUma.Enabled
+			end
+		end
+	})
+	Range = BetterUma:CreateSlider({
+		Name = "Range",
+		Min = 1,
+		Max = 80,
+		Default = 45,
+		Suffix = function(val)
+			if val >= 1 then
+				return "studs"
+			else
+				return "stud"
+			end
+		end
+	})
+	Delay = BetterUma:CreateTwoSlider({
+		Name = "Delay",
+		Min = 0.1,
+		Max = 2,
+		DefaultMin = 0.5,
+		DefaultMax = 2
+	})
+	UHS = BetterUma:CreateToggle({
+		Name = "Use heal spirit",
+		Default = true,
+		Visible = false,
+		Darker=true
+	})
+	UAS = BetterUma:CreateToggle({
+		Name = "Use attack spirit",
+		Default = true,
+		Visible = false,
+		Darker=true
+	})
+	AutoSummon = BetterUma:CreateToggle({
+		Name='Auto Summon',
+		Default=true,
+		Function=function(v)
+			UHS.Object.Visible=v
+			UAS.Object.Visible=v
+		end
+	})
+	Em = BetterUma:CreateToggle({
+		Name = "Emerald",
+		Default = true,
+		Visible = false,
+		Darker=true
+	})
+	Dim = BetterUma:CreateToggle({
+		Name = "Diamond",
+		Default = true,
+		Visible = false,
+		Darker=true
+	})
+	Target = BetterUma:CreateToggle({
+		Name='Target item drops',
+		Default=true,
+		Function=function(v)
+			Em.Object.Visible=v
+			Dim.Object.Visible=v
+		end
+	})
+end)
+
+run(function() 
+    local MatchHistory
+    
+    MatchHistory = vape.Categories.Exploits:CreateModule({
+        Name = "MatchHistoryReset",
+        Tooltip = "Resets your match history",
+        Function = function(callback)
+            if callback then 
+                MatchHistory:Toggle(false)
+                local TeleportService = game:GetService("TeleportService")
+                local data = TeleportService:GetLocalPlayerTeleportData()
+                MatchHistory:Clean(TeleportService:Teleport(game.PlaceId, lplr, data))
+            end
+        end,
+    }) 
 end)

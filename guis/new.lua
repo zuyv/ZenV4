@@ -5802,6 +5802,11 @@ mainapi:CreateCategory({
 	Icon = getcustomasset('newvape/assets/new/legittab.png'),
 	Size = UDim2.fromOffset(14, 14)
 })
+mainapi:CreateCategory({
+	Name = 'Exploits',
+	Icon = getcustomasset('newvape/assets/new/targetnpc1.png'),
+	Size = UDim2.fromOffset(14, 14)
+})
 mainapi.Categories.Main:CreateDivider('misc')
 
 --[[
