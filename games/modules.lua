@@ -2473,7 +2473,7 @@ run(function()
 		Function = function(callback)
 			local function cb1()
 
-				if not setfflag then vape:CreateNotification("Rain", "Your current executor '"..identifyexecutor().."' does not support setfflag", 6, "warning"); return end     
+				if not setfflag then vape:CreateNotification("ZEN", "Your current executor '"..identifyexecutor().."' does not support setfflag", 6, "warning"); return end     
 				if New.Enabled then
 					repeat
 						setfflag('DFIntDebugDefaultTargetWorldStepsPerFrame', '-2147483648')
@@ -3074,7 +3074,7 @@ run(function()
 					                        
 					                    end
 					                else
-					                    getgenv().BEN("Cannot locate where ur upgrade shop is at" 5, 'alert')
+					                    getgenv().BEN("Cannot locate where ur upgrade shop is at")
 										db = false
 										ABDU:Toggle(false)
 					                end

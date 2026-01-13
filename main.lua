@@ -11,7 +11,7 @@ local vape
 local loadstring = function(...)
 	local res, err = loadstring(...)
 	if err and vape then
-		vape:CreateNotification('Rain', 'Failed to load : '..err, 30, 'alert')
+		vape:CreateNotification('ZEN', 'Failed to load : '..err, 30, 'alert')
 	end
 	return res
 end
@@ -151,7 +151,7 @@ if not shared.VapeIndependent then
 			end
 		end
 	end
-	vape:CreateNotification('Rain', 'This is in BETA. (Expect Bugs)', 5, 'alert')
+	vape:CreateNotification('ZEN', 'This is in BETA. (Expect Bugs)', 5, 'alert')
 	finishLoading()
 else
 	vape.Init = finishLoading
