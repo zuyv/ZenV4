@@ -4729,8 +4729,8 @@ run(function()
 		local data = TeleportService:GetLocalPlayerTeleportData()
 		AEGT:Clean(TeleportService:Teleport(game.PlaceId, lplr, data))
 	end
-	AEGT = vape.Categories.Exploits:CreateModule({
-		Name = 'AutoEmptyGameTP',
+	AEGT = vape.Categories.Utility:CreateModule({
+		Name = 'EmptyGameTP',
 		Function = function(callback)
 			if callback then
 				if E.Enabled then
