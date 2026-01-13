@@ -1265,7 +1265,7 @@ run(function()
 	AimSpeed = AimAssist:CreateSlider({
 		Name = 'Aim Speed',
 		Min = 1,
-		Max = 20,
+		Max = 100,
 		Default = 6
 	})
 	Distance = AimAssist:CreateSlider({
