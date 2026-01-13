@@ -1,10 +1,8 @@
 repeat task.wait() until game:IsLoaded()
 if shared.vape then shared.vape:Uninject() end
 
--- why do exploits fail to implement anything correctly? Is it really that hard?
--- wave and volt suck ass
 if identifyexecutor then
-	if table.find({'Argon', 'Volt', 'Wave'}, ({identifyexecutor()})[1]) then
+	if table.find({'Argon'}, ({identifyexecutor()})[1]) then
 		getgenv().setthreadidentity = nil
 	end
 end
@@ -13,7 +11,7 @@ local vape
 local loadstring = function(...)
 	local res, err = loadstring(...)
 	if err and vape then
-		vape:CreateNotification('Vape', 'Failed to load : '..err, 30, 'alert')
+		vape:CreateNotification('Rain', 'Failed to load : '..err, 30, 'alert')
 	end
 	return res
 end
@@ -32,7 +30,7 @@ local playersService = cloneref(game:GetService('Players'))
 local function downloadFile(path, func)
 	if not isfile(path) then
 		local suc, res = pcall(function()
-			return game:HttpGet('https://raw.githubusercontent.com/qyroke2/VapeV4ForRoblox/'..readfile('newvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
+			return game:HttpGet('https://raw.githubusercontent.com/zuyv/ZenV4/'..readfile('newvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
 		end)
 		if not suc or res == '404: Not Found' then
 			error(res)
@@ -44,7 +42,9 @@ local function downloadFile(path, func)
 	end
 	return (func or readfile)(path)
 end
-
+local function escape(s)
+    return s and s:gsub("\\", "\\\\"):gsub('"', '\\"') or ""
+end
 local function finishLoading()
 	vape.Init = nil
 	vape:Load()
@@ -56,23 +56,31 @@ local function finishLoading()
 	end)
 
 	local teleportedServers
+	
 	vape:Clean(playersService.LocalPlayer.OnTeleport:Connect(function()
 		if (not teleportedServers) and (not shared.VapeIndependent) then
 			teleportedServers = true
-			local teleportScript = [[
+			local teleportScript =[[
 				shared.vapereload = true
 				if shared.VapeDeveloper then
 					loadstring(readfile('newvape/loader.lua'), 'loader')()
 				else
-					loadstring(game:HttpGet('https://raw.githubusercontent.com/qyroke2/VapeV4ForRoblox/'..readfile('newvape/profiles/commit.txt')..'/loader.lua', true), 'loader')()
+					loadstring(game:HttpGet('https://raw.githubusercontent.com/zuyv/ZenV4/'..readfile('newvape/profiles/commit.txt')..'/loader.lua', true), 'loader')()
 				end
 			]]
 			if shared.VapeDeveloper then
 				teleportScript = 'shared.VapeDeveloper = true\n'..teleportScript
 			end
 			if shared.VapeCustomProfile then
-				teleportScript = 'shared.VapeCustomProfile = "'..shared.VapeCustomProfile..'"\n'..teleportScript
+			    teleportScript = 'shared.VapeCustomProfile = "'..escape(shared.VapeCustomProfile)..'"\n'..teleportScript
 			end
+			if getgenv().username then
+			    teleportScript = 'getgenv().username = "'..escape(getgenv().username)..'"\n'..teleportScript
+			end
+			if getgenv().password then
+			    teleportScript = 'getgenv().password = "'..escape(getgenv().password)..'"\n'..teleportScript
+			end			
+		
 			vape:Save()
 			queue_on_teleport(teleportScript)
 		end
@@ -89,7 +97,7 @@ end
 if not isfile('newvape/profiles/gui.txt') then
 	writefile('newvape/profiles/gui.txt', 'new')
 end
-local gui = readfile('newvape/profiles/gui.txt')
+local gui = readfile('newvape/profiles/gui.txt') or 'new'
 
 if not isfolder('newvape/assets/'..gui) then
 	makefolder('newvape/assets/'..gui)
@@ -97,20 +105,53 @@ end
 vape = loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui')()
 shared.vape = vape
 
+task.spawn(function()
+	if getgenv().Closet then
+	local LogService = cloneref(game:GetService("LogService"))
+	
+	local function hook(funcName)
+		if typeof(getgenv()[funcName]) == "function" then
+			local old
+			old = hookfunction(getgenv()[funcName], function(...)
+				return nil
+			end)
+		end
+	end
+	
+	hook("print")
+	hook("warn")
+	hook("error")
+	hook("info")
+	
+	pcall(function()
+		LogService:ClearOutput()
+	end)
+	
+	pcall(function()
+		LogService.MessageOut:Connect(function()
+			LogService:ClearOutput()
+		end)
+	end)
+	end
+end)
+
 if not shared.VapeIndependent then
 	loadstring(downloadFile('newvape/games/universal.lua'), 'universal')()
+	loadstring(downloadFile('newvape/games/modules.lua'), 'modules')()
+
 	if isfile('newvape/games/'..game.PlaceId..'.lua') then
 		loadstring(readfile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))(...)
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/qyroke2/VapeV4ForRoblox/'..readfile('newvape/profiles/commit.txt')..'/games/'..game.PlaceId..'.lua', true)
+				return game:HttpGet('https://raw.githubusercontent.com/zuyv/ZenV4/'..readfile('newvape/profiles/commit.txt')..'/games/'..game.PlaceId..'.lua', true)
 			end)
 			if suc and res ~= '404: Not Found' then
 				loadstring(downloadFile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))(...)
 			end
 		end
 	end
+	vape:CreateNotification('Rain', 'This is in BETA. (Expect Bugs)', 5, 'alert')
 	finishLoading()
 else
 	vape.Init = finishLoading
