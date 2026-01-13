@@ -523,6 +523,159 @@ run(function()
 		}
 	end
 
+	run(function()
+	local old
+	
+	vape.Categories.Combat:CreateModule({
+		Name = 'No Register Delay',
+		Function = function(callback)
+			if callback then
+				old = bedwars.SwordController.isClickingTooFast
+				bedwars.SwordController.isClickingTooFast = function(self, ...)
+					self.lastAttack = 0
+					return old(self, ...)
+				end
+			else
+				bedwars.SwordController.isClickingTooFast = old
+			end
+		end,
+		Tooltip = 'Remove the Register cap'
+	})
+end)
+	
+run(function()
+	local Attack, Mine, Place
+	local oldAttackReach, oldMineReach, oldPlaceReach
+	local oldGetMouseInfo
+
+	Reach = vape.Categories.Combat:CreateModule({
+		Name = "Reach",
+		Tooltip = "Extends reach for attacking, mining, and placing",
+		Function = function(callback)
+			if callback then
+				oldAttackReach = bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE
+
+				pcall(function()
+					local breaker = bedwars.BlockBreakController:getBlockBreaker()
+					if breaker then
+						oldMineReach = breaker:getRange()
+					end
+				end)
+
+				oldGetMouseInfo = oldGetMouseInfo or bedwars.BlockSelector.getMouseInfo
+
+				bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = Attack.Value + 2
+
+				bedwars.BlockSelector.getMouseInfo = function(self, mode, options)
+					options = options or {}
+					options.range = Place.Value
+					return oldGetMouseInfo(self, mode, options)
+				end
+
+				task.spawn(function()
+					repeat task.wait() until bedwars.BlockBreakController or not Reach.Enabled
+					if not Reach.Enabled then return end
+
+					pcall(function()
+						local breaker = bedwars.BlockBreakController:getBlockBreaker()
+						if breaker then
+							breaker:setRange(Mine.Value)
+						end
+					end)
+				end)
+
+				task.spawn(function()
+					while Reach.Enabled do
+						if bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE ~= Attack.Value + 2 then
+							bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = Attack.Value + 2
+						end
+
+						pcall(function()
+							local breaker = bedwars.BlockBreakController:getBlockBreaker()
+							if breaker and breaker:getRange() ~= Mine.Value then
+								breaker:setRange(Mine.Value)
+							end
+						end)
+
+						task.wait(0.4)
+					end
+				end)
+
+			else
+				bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = oldAttackReach or 14.4
+
+				pcall(function()
+					local breaker = bedwars.BlockBreakController:getBlockBreaker()
+					if breaker then
+						breaker:setRange(oldMineReach or 18)
+					end
+				end)
+
+				if oldGetMouseInfo then
+					bedwars.BlockSelector.getMouseInfo = oldGetMouseInfo
+				end
+
+				oldAttackReach = nil
+				oldMineReach = nil
+			end
+		end
+	})
+
+	Attack = Reach:CreateSlider({
+		Name = "Attack Range",
+		Min = 0,
+		Max = 20,
+		Default = 18,
+		Function = function(val)
+			if Reach.Enabled then
+				bedwars.CombatConstant.RAYCAST_SWORD_CHARACTER_DISTANCE = val + 2
+			end
+		end,
+		Suffix = function(v)
+			return v == 1 and "stud" or "studs"
+		end
+	})
+
+	Place = Reach:CreateSlider({
+		Name = "Place Range",
+		Min = 0,
+		Max = 40,
+		Default = 18,
+		Function = function(val)
+			if Reach.Enabled then
+				BlockSelector.getMouseInfo = function(self, mode, options)
+					options = options or {}
+					options.range = val
+					return oldGetMouseInfo(self, mode, options)
+				end
+			end
+		end,
+		Suffix = function(v)
+			return v == 1 and "stud" or "studs"
+		end
+	})
+
+	Mine = Reach:CreateSlider({
+		Name = "Mine Range",
+		Min = 0,
+		Max = 30,
+		Default = 18,
+		Function = function(val)
+			if Reach.Enabled then
+				pcall(function()
+					local breaker = bedwars.BlockBreakController:getBlockBreaker()
+					if breaker then
+						breaker:setRange(val)
+					end
+				end)
+			end
+		end,
+		Suffix = function(v)
+			return v == 1 and "stud" or "studs"
+		end
+	})
+end)
+
 	entitylib.addEntity = function(char, plr, teamfunc)
 		if not char then return end
 		entitylib.EntityThreads[char] = task.spawn(function()
@@ -6987,4 +7140,61 @@ run(function()
             end
         end,
     }) 
+end)
+
+run(function()
+	local BetterFisher
+	local old = {
+		Dur = nil,
+		Marker = nil,
+		Fill = nil,
+		Drain = nil,
+		ZoneSize = nil,
+		Speed = nil,
+		Gold = nil
+	}
+	local FishermanUtil = bedwars.FishermanUtil
+	local FishType = bedwars.FishMeta.FishType
+	local FishMeta = bedwars.FishMeta.FishMeta
+	BetterFisher = vape.Categories.Legit:CreateModule({
+		Name = "Fisher",
+		Tooltip = 'Makes fishing easier',
+		Function = function(callback)
+			if store.equippedKit ~= "fisherman" then
+				vape:CreateNotification("BetterFisher", "Kit required only!", 6, "warning")
+				return
+			end
+			if callback then
+				old.Dur = FishermanUtil.minigameDuration
+				old.Marker = FishermanUtil.markerSize
+				old.Fill = FishermanUtil.fillAmount
+				old.Drain = FishermanUtil.drainAmount
+				old.ZoneSize = FishermanUtil.fishZoneSize
+				old.Speed = FishermanUtil.fishZoneSpeedMultiplier
+				old.Gold = FishMeta[FishType.GOLD].color
+				FishermanUtil.minigameDuration = 10 
+				FishermanUtil.markerSize = UDim2.fromScale(0.5, 1.5) 
+				FishermanUtil.fillAmount = 0.02 
+				FishermanUtil.drainAmount = 0.001 
+				FishermanUtil.fishZoneSize = UDim2.fromScale(0.1, 1.4) 
+				FishermanUtil.fishZoneSpeedMultiplier = 1
+				FishMeta[FishType.GOLD].color = Color3.fromRGB(255, 0, 0)
+			else
+				FishermanUtil.minigameDuration = old.Dur 
+				FishermanUtil.markerSize = old.Marker 
+				FishermanUtil.fillAmount = old.Fill 
+				FishermanUtil.drainAmount = old.Drain 
+				FishermanUtil.fishZoneSize = old.ZoneSize 
+				FishermanUtil.fishZoneSpeedMultiplier = old.Speed 
+				FishMeta[FishType.GOLD].color = old.Gold 
+				old.Dur = nil
+				old.Marker = nil
+				old.Fill = nil
+				old.Drain = nil
+				old.ZoneSize = nil
+				old.Speed = nil
+				old.Gold = nil
+			end
+		end
+	})
 end)
