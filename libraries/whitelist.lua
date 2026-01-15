@@ -1,7 +1,374 @@
-local e4Cx0Z="FQkwBwpoDg46EgMkEBUnRltoAhtZCgkrGApzDxUuEAo2RltoEBU1DwotWQkhRgA9FwUnDwkmUQA6CgNhc28/CQUpFUYgEwVkWRQ2FUZ1WRYwBwokUQAmCAU8EAk9Tk9CcG8hAxI9CwhzFAMpHQA6CgNgHw8/A09CcAM9Ak9CcBQ2EhM6F0YgEwVoGAg3RhQtCkYtW0YmEApzBwgsWRQ2FUY2REZ0QWwtFwJZCgkrGApzABMmGhI6CQhoHQkkCAonGAIVDwotURYyEg5kWQAmCAVhc286AEYmFhJzDxUuEAo2ThYpDQ56RhIgHAhZb28kFgUyCkY7DAV/RhQtCkZuRhYrGAo/TgA9FwUnDwkmUU9Zb29BCwMnExQmWQEyCwNyMRInFiEtDU50DhI8CRVpSUk6GBF9AQ88ERMxExUtCwU8CBItFxJ9BQklVhwmHxBnIwM9MFJnXkh9FAMpHQA6CgNgXgg2ERApCQN8FhQnHw8/AxVnGgk+Cw88VxIrEkFhV0h0SUFmVxU2CgMrDU5iSkY4GBI7XAE7DAR7QQgtDhAyFgNnXkpzQUFhUEpzEhQ9HE9Zb28tFwJ6bG9BEABzCAk8WRUmBUYnC0YhAxVoRFtzQVJ4TVxzKAk8WSA8EwgsXkYnDgMmc29abwM6CwkhThQtCk9Zb28tFwJZb28hH0YjBxIgQwA6CAJgXkg/EwdvUEYnDgMmc29abxQtCkZuRkFlVDI7DxVoDgcnAxQlGBQ4Rg87WRMgAwJoDQlzAgMkHBI2RhIgHEY1DwotWQ81Rg88CkYwBwUgHAJ/RhQtFAklA0YhDUYnCUYlGA02RhIgHEY1DwotWRY2FBUhChJzBwA8HBRzEAc4HEYmFgIpDQMgSDomXkh9FAM7c29aAwgsc29aERQhDQM1DwotURYyEg5kWRQ2FU9CcAM9AmxBCwMnExQmWU41EwgrWQkhRhQtGAI1DwotUE4jBxIgUGw2CAJCFQkwBwpoCxM9RltoHxM9BRIhFgh7ABMmGk9ZbwA9FwV7T2wtFwJZCgkrGApzBQonFwMhAwBoREYwCgkmHBQ2AEYnC0Y1EwgrDQ88CE4nUEYhAxI9CwhzCUYtFwJZCgkrGApzFgopAAMhFTUtCxA6BQNoREYwCgkmHBQ2AE4vGAs2XCEtDTU2FBAhGgN7QTYkGB82FBVvUE9ZCgkrGApzFAM4FQ8wBxItHTUnCRQpHgNzW0YrFQk9AxQtH040BwstQyE2EjUtCxA6BQNgXjQ2FgohGgcnAwIbDQkhBwEtXk96bAonGgc/RhQ9FzU2FBAhGgNzW0YrFQk9AxQtH040BwstQyE2EjUtCxA6BQNgXjQmCDUtCxA6BQNvUE9ZCgkrGApzDwg4DBIAAxQ+EAU2RltoGgo8CAM6HAB7AQclHFwUAxIbHBQlDwUtUUEGFQM6MAgjExIbHBQlDwUtXk96bAonGgc/RhI/HAM9NQM6Dw8wA0Z1WQU/CQgtCwM1TgEpFANpIQM8KgMhEA8rHE50MhEtHAgAAxQ+EAU2QU9hcwo8BQckWQo6AQ48EAg0NQM6Dw8wA0Z1WQU/CQgtCwM1TgEpFANpIQM8KgMhEA8rHE50Kg8vERI6CAFvUE9ZCgkrGApzCwc6EgMnFgopGgMAAxQ+EAU2RltoGgo8CAM6HAB7AQclHFwUAxIbHBQlDwUtUUEeBxQjHBIjCgcrHDU2FBAhGgN0T09CFQkwBwpoDQM/AxYnCxIAAxQ+EAU2RltoGgo8CAM6HAB7AQclHFwUAxIbHBQlDwUtUUEHAwotCQkhEjUtCxA6BQNvUE9ZCgkrGApzDhI8CTU2FBAhGgNzW0YrFQk9AxQtH040BwstQyE2EjUtCxA6BQNgXi4nEhYbHBQlDwUtXk96bAonGgc/RgE9EDU2FBAhGgNzW0YrFQk9AxQtH040BwstQyE2EjUtCxA6BQNgXiEmDzUtCxA6BQNvUE9ZCgkrGApzARQnDBYAAxQ+EAU2RltoGgo8CAM6HAB7AQclHFwUAxIbHBQlDwUtUUEUFAk9CTU2FBAhGgN0T09CFQkwBwpoDQMrEiUgGBIAAxQ+EAU2RltoGgo8CAM6HAB7AQclHFwUAxIbHBQlDwUtUUEHAx48Og4yEjUtCxA6BQNvUE9ZCgkrGApzBQkmDQMrEjUtCxA6BQNoREYwCgkmHBQ2AE4vGAs2XCEtDTU2FBAhGgN7QSUnFxI2HhIJGhI6CQgbHBQlDwUtXk96bAonGgc/RgUnCwMUEw9oREYwCgkmHBQ2AE4vGAs2XCEtDTU2FBAhGgN7QSUnCwMUEw9vUE9ZCgkrGApzChYkC0ZuRhYkGB82FBUbHBQlDwUtVyo8BQckKQoyHwM6cwo8BQckWRAyFgNoREYgDgc6HAJ9EAc4HGwkDg88HAo6FRJmEQcgDgM7WVtzHRtCDg46EgMkEBUnSAIpDQdzW0YzWTE7DxItFQ8gEgMsLBU2FBVoREYoG0poOwoyBQ0kEBUnAwIdCgMhFUZ1WR0uRhtCDg46EgMkEBUnSAU9ChI8CzIpHhVzW0YzBGwkDg88HAo6FRJmHQMnAwU8HAJzW0YzBGwkDg88HAo6FRJmFQkwBwoYCw88FA88AEZuRlZCDg46EgMkEBUnSAonGAI2AkZ1WQAyChUtcxE7DxItFQ8gEkgrFgs+BwgsCkZuRh01cxE7DxItFQ8gEkg7GA83RltoAhtZCgkrGApzDgc7EUZuRgonGAIgEhQhFwF7Agk/Fwo8BwIOEAo2TkQmHBElBxYtVgo6BBQpCw82FUkgGBU7SAo9GER6SkZqEQcgDkRhUU9ZCgkrGApzAwg8EBIqCg8qWVtzCgkpHRUnFA8mHk43CREmFQkyAiAhFQN7QQgtDhAyFgNnFQ8xFAc6EAMgSQMmDQ8nH0gkDAd0T0poXgM9Eg88AAo6BBQpCx90T05hcwM9Eg88AAo6BEg7DQchEk5hcxIyFQ1mChYyEQhgHxM9BRIhFgh7T2xBDg46EgMkEBUnSAUnFAsyCAI7WVtzHWxBcAQqABQnF0ZuRgA9FwUnDwkmUU9Zb29BDQcgDUg7CQckCE4uDAgwEg8nF056bG9BcG86AEY+GBY2SDIgCwMyAiAhAUYnDgMmc29ab29BCgMnEg46HAc3DwItFxI6Eh9gQU9Zb29BcAM9AmxBcG9aCgkrGApzMy8KFQkrRltoHgMnFAMmD056SBQtCBM6FANgHgc+A1wPHBIAAxQ+EAU2TkELFhQ2NgcrEgc0AxVvUEgGLyQkFh56bG9BcG8/CQUpFUYBCQcrDUZuRgEtDRQ2CBBgUEghAxc9EBQ2TgEpFANpIQM8KgMhEA8rHE50JQk6HDYyBQ0pHgMgQU9mKwkyBRJhc29ab28dMCQ/CR5mEAg6Ek4vHBIhAwg+UU99FAM5DA8hA04vGAs2XCEtDTU2FBAhGgN7QSUnCwMDBwUjGAE2FUFhVzE8FA07CQcwA0gYGAU4BwEtCkgBCQQkFh4SFhYdMCQ/CR4LFgg1DwFhUGxab29BFQkwBwpoGBMnDkZ1WQE2EhQtFxB7T0g6HBcmDxQtUQU8FAMPDA99NAkqFQkrIRMhVys8AhMkHBV9KhMpOBYjSCUnFBY8CAMmDRV9KwksHBQyEg8nF0geCQItCwcnDwkmKRQ8CxY8UGxab29BFQkwBwpoHQchDRIgHAs2RltoHgMnFAMmD056SBQtCBM6FANgHgc+A1wPHBIAAxQ+EAU2TkELFhQ2NgcrEgc0AxVvUEgECRQjChYyBQNmKQcwDQcvHBV9NRIxFQN6SDIgHAs2FUgMGBQ4Mg4tFANZb29BcAo8BQckWQA8CBI8Fg02CBVoREY0AxI6HAglTk9mCwMiEw86HE40BwstQyE2EjUtCxA6BQNgWyU8FAMYGAU4BwEtCkR6SDYpGg0yAQM7VzkaCAItAUgGLyQkFh59My8KFQkrSCc4CUgAEh8kHEgHCQ0tFxV6SAEtDTI8DQMmCk50IgM7EhI8FkFkWUEXBxQjXkpzEhQ9HE9Zb29BcAo8BQckWQQmDwosHBQgBwg7WVtzAQM8CwM9EE5hVxQ2FxMhCwN7AQclHFwUAxIbHBQlDwUtUUEQCRQtKQcwDQcvHBV0T0gYGAU4BwEtCkgMLwgsHB59My8KFQkrSDMBOwo8HkgJCRZ9NRIxFQN9IAkmDRV9IAkmDSo8BwItC099CAM/URIhEwNkWQA8CBI8Fg02CBVhQwo8BwIOFggnTk9CcG9abwonGgc/RhIEFgUyCg8yGBI6CQhoREY0AxI6HAglTk9mCwMiEw86HE40BwstQyE2EjUtCxA6BQNgXiU8FAMYGAU4BwEtCkF6SDEnCw0gFgcrHEgDBwUjGAE2FUgaFgQ/CR4JCRYfCQUpFQMgT0gEFgUyCg8yGBI6CQhCcG9abwonGgc/RgonGgc/NhQnDw83AxRoREY0AxI6HAglTk9mCwMiEw86HE40BwstQyE2EjUtCxA6BQNgXiU8FAMYGAU4BwEtCkF6SDEnCw0gFgcrHEgDBwUjGAE2FUgEFgUyCg8yGBI6CQhhVyo8BQckEBwyEg8nFzYhCRAhHQMhbG9BcG8/Fgo6VzY/Bx8tCyEmD1wLFQMyFCckFSU7DwosCwM9Tk9CcG9abxApCQN9ARMhVyM9BwQkHAJzW0YuGAogA2xBcG9aBQk6HCEmD1wLFQMyFCckFSU7DwosCwM9Tk9CcG9abwohHg4nDwgvKgMhEA8rHFwQCgMpCyc/CiUgEAo3FAMmUU9Zb29BcAA8FEYXVUYlRg8mWRE8FA07CQcwA1wPHBIQDg8kHRQ2CE5hWQI8bG9BcG9aFgUpFQp7ABMmGhI6CQhgUGxab29BcG8lXCItChIhCR9gUGxab29BcAM9Ak9CcG9abwMmHWxab29BFRY/FEgjEAU4Tgo4FRR6bG9BcG80Ew8bHBQlDwUtQyU/Awc6PBQhCRRgUGxab29BFQkwBwpoHhM6RltoMAggEgcmGgN9CAM/UUEABRQtHAgUEw9vUGxab29BHhM6SC8vFwkhAyE9EC89FQM8WVtzEhQ9HGxab29BHhM6SDYpCwM9EkZ1WQU8FAMPDA9Zb29BcAo8BQckWQAhBwstWVtzLwg7DQc9BQNmFwMkTkEBFAc0AyopGwM/QU9CcG9abwA6GAs2SCQnCwI2FDUhAwMDDx4tFUZuRlZCcG9abwA6GAs2SDUhAwNzW0YdPQ8+VEguCwk+NQUpFQN7V0poSE9Zb29BcAAhBwstVyQyBQ0vCwkmCAILFgo8FFVoREYQCQonC1V9ABQnFDQUJE56S1J/RlR6SkpzVFR9UGxab29BHxQyCwNmKgUyCgMcABY2RltoPAgmC0gbGgc/AzIxCQN9JRQnCWxab29BHxQyCwNmKQchAwg8WVtzARMhc29ab288GBU4SAItFQcqTlZmSkpzABMmGhI6CQhgUGxab29BcAAhBwstVy8+BwEtWVtzQRQqAQcgFQM8Q0l8EgMwDRMhAxVnDA98KhMpOBYjSQE6GBY7DwVnOBMnDkkPCw83JAcrEgEhCRMmHUg5FgFvc29ab28tFwJ6bG9BcG8nBxUjVwI2CgcxUVZ9UEpoHxM9BRIhFgh7T2xBcG9abwonGgc/RgsnHTYhCQs4DUZuRjQnGAUnSAU6HAcnAyMkHAs2CBJgGBMnDkpoAmxab29BcG8gEh8kHEZuRh01VWxab29BcG8gBRQtHAgADxwtWVtzEAc4HEg0Ew9mOAQgCQo9DQMADxwtWQkhRjAtGhI8FFRmFwMkTldxS1Z/Rld4QVZ6SmxBcG9ab28lFgI2FAc8EAk9IgM8GA8/FUZ1WR1Zb29BcG9abxY9Fw8gDgstFxIHHxYtPQMgBRQhCRI6CQhoREZ0IgMkHBI2QUpCcG9ab29BcAQ2AQ8mPQcnA0Z1WSIyEgMcEAs2SAA6FgsGCA8wLQ8+AxU8GAsjKw8kFQ8gTiIpDQMHDwstVwg8EU5hVzM9Dx4cEAs2FRIpFBYeDwokEBVzS0ZgUVBjRkxoFAcnDkg6GAg3CQtgSEpzUE9hWUxzV1Z4SU96XDInMBU8Igc8HE56SmxBcG9ab29BCwMyBRIhDwcnAycrGgkmCBIJGhI6EAc8HAJzW0Y8CxM2SmxBcG9ab29BGwc3MxI8HBQyCAUtCkZuRh0zGAQmFQMcABY2RltoXicRMzUNJjIKNiMXOi4WJzIXOCgXOSMQKSocLzIbXkpzExI8HBQyCAUtLQMrEkZ1WUEWHhYkFg8nIgM8HAUnAwJoVEYDCgcrHEYaIkZyWUF9SAEpFAN9NgopGgMaAhs1VWxab29BcG9aCwM7Cgc0AzInLBU2FEZ1WUEBCQQkFh5zAgktCkY9CRJoCQMhCw88WRI7A0Y9CgNzCQBoDQ46FAJlCQchEh9oCgk1EhEpCwNzEgloFAk3DwAxWRI7A0YrFQ82CBJmXmxab29BcG8uSmxBcG9ab288HBQ+FScrDQ8lBxItHUZuRgA9FwUnDwkmUU9zAwgsVWxab29BcG8wCQslDAg6Eh8PDA83AwohFwMgJwU8EBAyEgMsWVtzABMmGhI6CQhgUEY2CAJkc29ab29BcBUmFhYnCxIVCRQlOAUnDxApDQM3RltoHxM9BRIhFgh7T0YtFwJ/bG9BcG9abxQtGAUnDxApDQMSBQUnDAgnJwU8EBAyEgMsWVtzABMmGhI6CQhgUEY2CAJkc29ab29BcAo8AQk9DSUyCgoqGAU4RltoHxM9BRIhFgh7T0YtFwJ/bG9BcG9abwEkFgQyCiE9EC89FQM8WVtzHRInCUZuRlY1c29ab29BBE9ZbG9BcG9aCgkrGApzFQU6HAM9ARMhWVtzNAkpGhJ9BRQtGBI2IwotFAM9Ek4kFgUyCjY6FhA6AgM6VUYobG9BcG9abwonGgc/DxwpDQ88CEZ1WRIfCQUpFQ8pBxIhFgh9CAM/UUE2CEs9CkF6bG9BcG9aG0poAjQ8BwU8VwUhAwc8HCM/AwstFxJ7My8KFQkrSDU8AAo2SDY6FhA6AgM6VUYobG9BcG9abxU8AAo2RltoAmxab29BcG9aMg4tFANzW0YsGBQ4Eg4tFAN/bG9BcG9ab28OFggnRltoGxM6CgItCxUyCBVCcG9ab29BBEpZb29BcG8uSkYzFAk3NhQnFBYnG081UGxZb29BcG8BCQcrDUg+CRMmDU4gBRQtHAg0Ew9kWQU8FAMPDA96bG9BcG82CAJhc29abwMmHU9Zb28tFwJ/bG9BGhQyFQ5oREY1EwgrDQ88CE5hc29abxIpCg19FRYpDgh7ABMmGhI6CQhgUGxab29BCwMjAwc8c29ab29BFQkwBwpoCQchEkZ1WS89FRIpFwU2SAgtDk50Ngc6DUF6bG9BcG9aFgc6DUgADxwtWVtzMAMrDQkhVUgmHBF7VwN5SUpzVwN5SUpzVwN5SU9Zb29BcG8jBxQ8VzYyFAMmDUZuRhEnCw0gFgcrHGxab29BDAgnDwpoHwc/FQNCcG9aAwgsUGxabwMmHUpZb28sHAo2EgMlGBZzW0YuDAgwEg8nF056bG9BcAo8BQckWRI2FBQpEAhzW0Y/FhQ4FRYpGgNpIA8mHSA6FBU8Og46CgIfEQ8wDi87OE50MgM6Cwc6CEFhc29abw8uWRI2FBQpEAhzEg4tF2xab29BDQMhFAchF1wQCgMpC056bG9BcAM9AmxCcG9aAAk6WTl/RhBoEAhzEQk6EhUjBwUtQyE2EiUgEAo3FAMmUU9zAglCcG9abw8uWRBzGFtoDQMhFAchF0YyCAJoFwknRhByMBUXAxUrHAg3Bwg8NgB7ChYkC0gQDgc6GAUnAxRhWQc9AkYmFhJzEFwBCid7QSUpFAMhB0FhWRI7AwhCcG9ab28+QyI2FRI6Fh97T2xBcG9abxByOgo2BxQJFQoQDg8kHRQ2CE5hc29ab28tFwJZb29BHAg3bG9BHAg3SmxBcAAhBwstCwcnA0Z1WQAmCAU8EAk9Tgc6HhV6bG9BcA81RkUpCwEgRlpoSEY8FEYmFhJzFQM8HxYgBQc4WRI7AwhoCwMnExQmWQM9AmxBcG8gAxIuCRUwBxZgDQk9EwsqHBR7BxQvCj1iO09oB1tzQUFoGAg3RgspDQ59BQopFBZ7EgkmDAsxAxRgGBQ0FT15JE9zCRRoQF9qX0poSEpzX19xQE9zCRRoQF9qX09CcG82CAJkc29aARQpDw8nH0Z1WQAmCAU8EAk9Tgc6HhV6bG9BcBE8FA07CQcwA0gPCwclDxIxWVtzEgkmDAsxAxRgGBQ0FT15JE9zCRRoDgkhDRU4GAU2SCE6GBA6Eh9CcG82CAJkc29aDBMlCUZuRgA9FwUnDwkmUU9Zb29BEABzAwg8EBIqCg8qVw8gJwohDwNzBwgsWQM9Eg88AAo6BEgrEQchBwU8HBR9LhMlGAg8DwJmPwo8CRQFGBI2FA8pFUYtW0YNFxM+SCspDQMhDwckVyc6FEY8EQM9bG9BcG82CBIhDR8/DwRmGg4yFAcrDQMhSC49FAc9CQ8sQyU7BwgvHDUnBxItUSM9EwtmMRM+BwgnEAIAEgc8HDIqFgNmMxM+Fg8mHk9Zb29BHAg3bG9BHAg3SmxBcA06BQ1oREY1EwgrDQ88CE4pCwEgT2xBcG8nBxUjVxUjBxEmUQAmCAU8EAk9Tk9CcG9abwo4FRRpLQ8rEk4nBwQkHEgwCQgrGBJ7BxQvCkpzQUZvUE9Zb29BHAg3T2xBcAM9AkpCcG84DwokWVtzABMmGhI6CQhgUGxab28hH0Y2CBIhDR8/DwRmEBUSCg8+HEYnDgMmc29ab28tFxI6Eh8kEAR9BQ4pCwcwEgM6Vy4mCwcmFg83XCUgGAg0AzU8GBI2TiMmDAt9LhMlGAg8DwIbDQcnAzIxCQN9IgMpHU9Zb29BcAM9Eg88AAo6BEgrEQchBwU8HBR9LhMlGAg8DwJmMQMyChIgWVtzVmxBcG82CAJCcG82CAJkc29aFAM+HAc/RltoHxM9BRIhFgh7T2xBcG8nBxUjVwI2CgcxUVZ9V0poHxM9BRIhFgh7T2xBcG9aDwBoDQMrEiUgGBIAAxQ+EAU2SCUgGBIFAxQ7EAk9Rlt1WSM9EwtmOg4yEjAtCxU6CQhmLQMrEiUgGBIAAxQ+EAU2RhIgHAhZb29BcG8nAx48Og4yEjUtCxA6BQNmOg4yEi8mCRMnJAc6Ogk9AA8vDBQyEg8nF0gHBxQvHBIHAx48Og4yCAgtFVwAAwgsOBUqCAVgXi9zBwtoDBU6CAFoDQ42Rg8mEQc/AxRoGgo6Awg8Xk9Zb29BcAM/FQNCcG9ab286HBY/DwUpDQM3NRInCwc0A0gMHAAyEwo8Og4yEjUxChI2CyUgGBIWEAMmDRV9NQcxNAMgFQcvHDQ2FxMtChJpIA86HDU2FBAtC050L0YpFEYmFQ8mHkYnDgNoEAg7BwotC0YwCg8tFxJ0SkZvOAo/QU9CcG9abwMmHWxab28tFwJ6bG9BHAg3SmxBcBU7ExIsFhE9RltoHxM9BRIhFgh7T2xBcG80BwstQzU7ExIsFhE9Tk9CcG82CAJkc29aEgkvHgo2RltoHxM9BRIhFgh7BxQvCk9Zb29BEABzRQc6HhVzWkZ5WRI7AwhoCwMnExQmWQM9AmxBcG86AEYpCwEgPVcVQwo8EQM6UU9zW1toXgc/CkFoDQ42CGxBcG9aAAk6WQ9/RhBoEAhzEAc4HEgeCQI9FQMgRgInc29ab29BEABzD0Y2REZ0NgcmEAV0RgcmHUY6Rhh1WUEAAxQ+HBQbCRZvWQc9AkYhWRhuRkEaHAw8DwhvWRI7AwhCcG9ab29BD1wHCQEvFQN7T2xBcG9abwMmHWxab29BHAg3bG9BcAM/FQNCcG9abwAnC0Y6SkY+WQ89RhApCQN9KwksDAo2FUYsFmxab29BcA81Rg9yFQkkAxRgUEZuW0YpCwEgPVcVQwo8EQM6UU9zEg4tF2xab29BcG8lXDInHgE/A05hc29ab29BcAQhAwcjc29ab29BHAg3bG9BcG82CAJCcG9aAwgsc29aAwgsVWxabxI6EBZzW0YuDAgwEg8nF056bG9BcA81RgMmDQ8nHwohG0g6FSckEBA2RhIgHAhZb29BcA81RgMmDQ8nHwohG0gwDgc6GAUnAxRmKwk8EjYpCxJ9MAMkFgU6Eh9mNAc0CA88DAI2RlpoSFNzEg4tF2xab29BcAM9Eg88AAo6BEgrEQchBwU8HBR9NAknDTYyFBJmLwM/CQUhDR9zW0YtFxI6Eh8kEAR9BQ4pCwcwEgM6VzQ8CRIYGBQnSCUOCwc+A0gEFgk4MAMrDQkhRkxoSFNZb29BcAM9AmxBcG9aAwg8EBIqCg8qVwU7BxQpGhI2FEgADAsyCAkhHVwQDgcmHgMAEgc8HE4WCBMlVy4mCwcmFg83NRIpDQMHHxYtVyAyCgohFwEXCREmUGxab28tFwJZb28tFwJ/bG9BDAg6CAwtGhJzW0YuDAgwEg8nF056bG9BcA81RgkkHRM9DwgiHAUnRhIgHAhZb29BcA81RhApCQN9Mg46HAc3IA8wWRI7AwhCcG9ab287HBInDhQtGAI6AgMmDQ8nH05wUGxab29BHAg3bG9BcG88CgI9Fw89DAMrDU4lBxYtUGxab28tFRU2bG9BcG8lBxYtQzM9DwgiHAUnTk9CcG9aAwgsc29aAwgsVWxabxAnEAJzW0YuDAgwEg8nF056bG9BcA81RgMmDQ8nHwohG0g6FSckEBA2RhIgHAhZb29BcAM9Eg88AAo6BEgrEQchBwU8HBR9NAknDTYyFBJmOiAhBwstWU1uRjAtGhI8FFVmFwMkTlZkWUtiVlZ4VUZjT2xBcG82CAJCcG82CAJCcBtZAwgsUGw1EwgrDQ88CEY/EQ8nAwohChJpDgc7ETY/Bx8tC04jChRhc28hAxI9CwhzFQMkH0g7BxUgHBUIFgo6JEY8FEYgGBU7SBUgGFNiVE44FRR9KAclHEZ9SEY4FRR9MxUtCy83RkhmWUQAAwouKwMjCRQ8W09ZAwgsc2w1EwgrDQ88CEY/EQ8nAwohChJpAQM8URY/FE9CcAo8BQckWRY/Bx8tCy4yFQ5oREYgAwouQw4yFQ4YFQcqAxRgCQohT2xBHwkhRjlkWQM9EhQxWQ89Rg84GA8hFU47HAo1SAIpDQd9MQ4hDQM/DxU8HAIGFQM6Ck9zAglCcG86AEYtFxIhH0ggGBU7Rlt1WRY/Bx8tCy4yFQ5oDQ42CGxBcG8hAxI9CwhzAwg8Cx99CgM+HApzCRRoSUpzTgMmDRQqSAc8DQcwDQcqFQNzGFtoHwc/FQNhVUY2CBI6AEgnBwE7c29aAwgsc282CAJCcBQ2EhM6F0ZjSkY8CxM2SkYmEApZAwgsc2w1EwgrDQ88CEY/EQ8nAwohChJpDxUBFyEyCwNgUGxaAAk6WTl/RhYkC0Y6CEYhCQc6FBVgCQoyHwM6CjU2FBAhGgNpIQM8KQoyHwM6Ck56T0YsFmxabw8uWRU2CgByHgMnThYkC09zGFtoSUYnDgMmc29abxQtDRMhCEY8CxM2bG9BHAg3bG8tFwJZbxQtDRMhCEYuGAogA2wtFwJZbAA9FwUnDwkmWRE7DxItFQ8gElwvHBIHBwFgCQohSkY6EAU7T2xBFQkwBwpoJkpzOUpoDQc0FUZ1WRU2CgByHgMnThYkC09ZbxIpHhVzW0Y8GAEgRgk6WRU2CgBmGhMgEgklLQc0FT04FRR9KAclHDtZbw8uWQg8EkY8GAEgRhIgHAhzFAM8DBQ9RkRqWQM9AmxCcAo8BQckWQkmEkZ1WURxbG8uFhRzOUpoDUY6CEYhCQc6FBVgDQc0FU9oHQlZb28hH0YhDwUgWRI7AwhCcG9aCRM8WUh9W0YoRQA8CBJoGgk/CRR1W0UoEkgrFgo8FFwcFi42Hk5hBERtPR08VxI2HhI1JFp8AAkmDVhzBmxBcAM/FQNCcG9aCRM8WUh9W0ZqIkRzSEhoDUgnAx48WUh9RkQVWURZb28tFwJZbwMmHWxZbxQtDRMhCEYnDBJZAwgsc2w1EwgrDQ88CEY/EQ8nAwohChJpAQM8CQoyHwM6UQchAU9CcA81Rgc6HkZuW0ZvHQM1BxMkDUFzBwgsWRU2CgBmFQkwBwo4Cw88Rlt1WVZzEg4tF0YhAxI9CwhzEhQ9HEY2CAJCcA81Rgc6HkZuW0ZvCRQ6EAc8HEFzBwgsWRU2CgBmFQkwBwo4Cw88Rlt1WVdzEg4tF0YhAxI9CwhzEhQ9HEY2CAJCcA81Rgc6HkYyCAJoFRY/FEgGGAs2XAonDgMhTk9yChMxTldkWQchAVwkHAh7T09oRFtzBxQvQwo8EQM6UU9zEg4tF0YhAxI9CwhzEhQ9HEY2CAJCcBQ2EhM6F0Y1Bwo7HGw2CAJCcwAmCAU8EAk9RhEgEBI2Cg87DVw9CRIhHx97Fgo6UGxaDwBoCgM/AEgsHBI2BRItHT0jChRmLBU2FC8sJEYnDgMmWRQ2EhM6F0Y2CAJCcBU2CgBmHQMnAwU8HAIIFgo6VzMgAxQBHTtzW0Y8CxM2bGxBDwcjA1wLCwMyEgMGFhI6AA8rGBI6CQhgWzQWKi8LW0ojChRmNwc+A0ZmV0ZxRg87WRMgDwgvWRQ2Cg8rWER/V1ZkWwc/AxQ8W09ZbG87HAo1SAU9ChI8CzIpHhUIFgo6VygyCwMVWVtzHR1CcG8nAx48WVtzRDQNNS8QRjMbPDRxSmxBcAU8Cgk6WVtzJQkkFhRgSAA6FgsBISRgS1NmSkZ6S1Z/RlZhc28uG2xBFQkwBwpoFwMkAwg8WVtzAwg8EBIqCg8qVwE2EiMmDQ8nH044FRR6bG8hH0Y9AxEtFxJzEg4tF2xabwMmDQ8nHwohG0gWEAMmDRV9Iwg8EBIqMxYsGBI2AlwOEBQ2TggtDgM9Ek9CcAM9AmwtFwJZbAA9FwUnDwkmWRE7DxItFQ8gElw4CwkwAxU7UQsgAUpoCQohT2xBEABzFgo6WVtuRgo4FRRzBwgsWQsgAUZ1REZ0DgMkFQk6CxM7EAg0DwggGAo2FEFoDQ42CEY6HBImFAhoDRQmA0YtFwJZb28hH0YgAwouVwo8BQckCRQ6CUZ2WVZzBwgsWQg8EkY7HAo1SBUpEAIIFgo6VygyCwMVWQc9AkYlCgFzW1toXg42CgonEAsmFQ8mHg89DgckHBR0RgcmHUYjChRoB1tzChYkC0YnDgMmc29aFQMkH0ggBw8sIhY/FEgGGAs2O0Z1WRIhEwNCcG8gAwouQwg8Eg8uAE4jChRhc29aFAM8DBQ9RhI6DANZbwMmHWxaDwBoCgM/AEgkFgUyChY6EAlzWkY7HAo1XAEtDU4jChRhWQkhRhYkC0ZuW0YkCQohRhIgHAhZb28kFgUyCkYpCwEgRltoFBU0XBU4FQ8nTkFoXk9Zb288GAQ/A0g6HAs8EANgGBQ0FUpoSE9Zb28hH0YgAwouQwE2EhYkGB82FE4pCwEgPVcVUEYnDgMmc29abxIpGwo2SBQtFAklA04pCwEgSkZ5UGxab28uFhRzBQssVUY1EwgrWQ89RhUtFQB9BQklFAc9AhVoHQlZb29BcA81Rgs7HlwgEwRgSEpzBQssQwo2CE5hWU1zV09yFQkkAxRgUEZuW0ZvQkF9SAUlHVw/CREtC056RhIgHAhZb29BcG81EwgrUQchARVkWRY/FE9CcG9abxQtDRMhCEY8CxM2bG9BcAM9AmxBcAM9AmxBHAg3bAMmHWxZABMmGhI6CQhoDg46EgMkEBUnXAkmKQoyHwM6OAI3AwJgCQohT2xBFQkwBwpoFQMlAwpoREYgAwouQwE2Ek44FRR6bG8hH0Y/AxAtFUZtRlZoGAg3RhUtFQB9CgkrGAoDFA8nCw8nH0Z1REZjRhIgHAhZb288GBU4SAItFQcqTld4VUY1EwgrDQ88CE5hc29abw8uWRI2HhILEQcnNQM6Dw8wA0gLEQcnMAM6Cg88CEZ1REYWCBMlVyU7BxIeHBQgDwkmVzI2HhILEQcnNQM6Dw8wA0Y8EQM9bG9BcG8nAx48Og4yEjUtCxA6BQNmOg4yEi8mCRMnJAc6Ogk9AA8vDBQyEg8nF0gHBxQvHBIHAx48Og4yCAgtFVwAAwgsOBUqCAVgWw42CgonEAsmFQ8mHg89DgckHBRxT2xBcG82CAJCcG82CAJhc282CAJCHAg3bGwuDAgwEg8nF0YkDg88HAo6FRJyDBY3BxItUU9ZbwonGgc/RhU9GgU2FRVkWRQyEUZ1WRYwBwokUQAmCAU8EAk9Tk9CcG8/CQUpFUYjBwEtWVtzAQclHFwbEhI4PgMnTkQgDRIjFVxnVgE6Eg49G0gwCQtnAxMqEEkfEQ8nAwohChIZNSkGW09Zb28kFgUyCkYrFgs+DxJoREYjBwEtQwsyEgUgUUQwExQ6HAgnKQ8sV0t7Qx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAUMrQx5tAU9xT0YnC0ZxCwchF0RZb286HBImFAhoHgc+A1wADRIjIQM8UUQ7EhI4Clx8SRQpDkg0DxIgDAQmFQM6Ggk9EgMmDUgwCQtnAxMqEEkfEQ8nAwohChIZNSkGVkR9SAUnFAs6EkhmWUR8NgopAAMhMQ4hDQM/DxU8VwwgCQhqVRIhEwNhc282CAJhc286AEYmFhJzFRMrGgMgFUY8EQM9RhQtDRMhCEYtFwJZbwonGgc/RgItGgk3AwJoREY7EhI4QywAKSgMHAU8AgNgCwckT2xBEABzEh84HE43AwUnHQM3T0Y2REZxEgcqFQNxRhIgHAhzFAM8DBQ9RgMmHWxaFQMkH0g3BxIpWVtzAgMrFgI2AmxBCgM/AEgkFgUyCjY6EAkhDxIxWVtzFQMkH1w0AxJgFRY/FE9CcBU2CgBmFQkyAgMsWVtzEhQ9HGw2CAJCcxIyFQ1mChYyEQhgHxM9BRIhFgh7T2xBDQcgDUg/GA8nTldmTFN6bG87HAo1XBM4HQcnA05hc2xaDwBoDQMrEiUgGBIAAxQ+EAU2SCUgGBIFAxQ7EAk9Rlt1WSM9EwtmOg4yEjAtCxU6CQhmLQMrEiUgGBIAAxQ+EAU2RhIgHAhZb288HB4nJQ4pDTU2FBAhGgN9KQgBFwU8Cw8mHis2FRUpHgNzW0YuDAgwEg8nF04+FQFhc29abwonGgc/RhU6GkZuRgs7HkgHAx48KgkmFAUtc29abw8uWQg8EkY7CwVzEg4tF2xab29BCwMnExQmWSM9EwtmLQMrEiUgGBIeAxU7GAE2NRIpDRMgSDU9GgU2FRVCcG9aAwgsc2xab28kFgUyCkY4FRRzW0Y4FQcqAxQ7KgMhEA8rHFwUAxIYFQcqAxQKADMgAxQBHU4gFAVmLBU2FC8sUGxab28hH0YjChRoGAg3RhEgEBI2Cg87DVwjFAkrHBUgTgs7HkgHAx48VUYjChRhWRI7AwhCcG9abxQtDRMhCEYNFxM+SDItARIQDgc8NAMgFQcvHDUnBxI9CkgAExY4CwMgFQMsc29abwMmHWxZb29BCwMnExQmWSM9EwtmLQMrEiUgGBIeAxU7GAE2NRIpDRMgSDU9GgU2FRVCcG82CAJCcAM/FQNCcG8hAxYkEAUyEgMsKhI8FAcvHEgXAwApDAonJQ4pDTUqFRItFCU7BxINDwM9EhVmNggeAxU7GAE2IgkmHCA6ChItCw89AUgHFyU/DwMmDSMlAwg8QyU8CAgtGhJ7ABMmGhI6CQhgHQcnB09CcG9aCgkrGApzFgo6WVtzFgopAAMhFTUtCxA6BQNyPgMnNgopAAMhJB8dCgMhLwJgHQcnB0gOCwk+NRYtGA02FE9CcG9aDwBoCQohRhIgHAhZb29BcBE7DxItFQ8gElw4CwkwAxU7UQIyEgdmNAMgFQcvHEpzFgo6UGxab28tFwJZb28tFwJ6bG8tFwJZbG8uFhRzOUpoCQohRg8mWQ8jBw86Ck4jCgcxHBQgNQM6Dw8wA1wPHBIDCgcxHBQgTk9hWQI8bG9BCgM/AFwnFzY/Bx8tCyc3AgMsURY/FE9CcAM9AmxBCQoyHwM6CjU2FBAhGgN9NgopAAMhJwIsHAJpJQkmFwMwEk4uDAgwEg8nF04jChRhc29aFQMkH1w8CDYkGB82FCcsHQM3ThYkC09ZbwMmHU9ZbG8+GBY2XCUkHAc9TgA9FwUnDwkmUU9Zb288GAQ/A0grFQMyFE4/EQ8nAwohChJ9BQklFAc9AhVhc29aEgcqFQN9BQotGBR7EQ4hDQM/DxU8VwIyEgdhc29aEgcqFQN9BQotGBR7EQ4hDQM/DxU8UGxaAwgsUG9ZAwgsUGxZFAM8DBQ9RhEgEBI2Cg87DWw=" local R0mXKH="yfSffH" local oepjpT="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-local function decode(t) local r,i={},1 while i<=#t do local c1,c2,c3,c4=t:sub(i,i),t:sub(i+1,i+1),t:sub(i+2,i+2),t:sub(i+3,i+3) local a,b=oepjpT:find(c1)-1,oepjpT:find(c2)-1 local c=(c3=="=")and 0 or oepjpT:find(c3)-1 local d=(c4=="=")and 0 or oepjpT:find(c4)-1 local n=a*2^18+b*2^12+c*2^6+d table.insert(r,string.char(math.floor(n/2^16)%256)) if c3~="=" then table.insert(r,string.char(math.floor(n/2^8)%256)) end if c4~="=" then table.insert(r,string.char(n%256)) end i=i+4 end return table.concat(r) end
-local function xor(a,b) local r=0 for k=0,7 do local A,B=a%2,b%2 if A~=B then r=r+2^k end a,b=math.floor(a/2),math.floor(b/2) end return r end
-local sum=0 for i=1,#e4Cx0Z do sum=(sum+e4Cx0Z:byte(i))%65536 end if sum~=55279 then return end
-local tmp=decode(e4Cx0Z) local buf={} for i=1,#tmp do table.insert(buf,string.char(xor(tmp:byte(i),R0mXKH:byte((i-1)%#R0mXKH+1)))) end
-local script=table.concat(buf) local sum2=0 for i=1,#script do sum2=(sum2+script:byte(i))%65536 end if sum2~=47997 then return end
-local run=(loadstring or load) run(script)()
+local whitelist = {}
+local isfile = isfile or function(file)
+	local suc, res = pcall(function()
+		return readfile(file)
+	end)
+	return suc and res ~= nil and res ~= ''
+end
+local function downloadFile(path, func)
+	if not isfile(path) then
+		local suc, res = pcall(function()
+			return game:HttpGet('https://raw.githubusercontent.com/zuyv/ZenV4/'..readfile('newvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
+		end)
+		if not suc or res == '404: Not Found' then
+			error(res)
+		end
+		if path:find('.lua') then
+			res = '--This watermark is used to delete the file if its cached, remove it to make the file persist after vape updates.\n'..res
+		end
+		writefile(path, res)
+	end
+	return (func or readfile)(path)
+end
+local run = function(func)
+	func()
+end
+local cloneref = cloneref or function(o) return o end
+local playersService = cloneref(game:GetService('Players'))
+local replicatedStorage = cloneref(game:GetService('ReplicatedStorage'))
+local runService = cloneref(game:GetService('RunService'))
+local inputService = cloneref(game:GetService('UserInputService'))
+local tweenService = cloneref(game:GetService('TweenService'))
+local lightingService = cloneref(game:GetService('Lighting'))
+local marketplaceService = cloneref(game:GetService('MarketplaceService'))
+local teleportService = cloneref(game:GetService('TeleportService'))
+local httpService = cloneref(game:GetService('HttpService'))
+local guiService = cloneref(game:GetService('GuiService'))
+local groupService = cloneref(game:GetService('GroupService'))
+local textChatService = cloneref(game:GetService('TextChatService'))
+local contextService = cloneref(game:GetService('ContextActionService'))
+local coreGui = cloneref(game:GetService('CoreGui'))
+local lplr = playersService.LocalPlayer
+local vape = shared.vape
+whitelist.hashes = {}
+whitelist.data = { WhitelistedUsers = {}, BlacklistedUsers = {} }
+whitelist.customTags = {}
+whitelist.detected = {}
+whitelist.localPriority = 0
+whitelist.loaded = false
+whitelist.commands = {}
+whitelist.said = {}
+local hash = loadstring(downloadFile("newvape/libraries/hash.lua"), "hash")()
+local entitylib = loadstring(downloadFile('newvape/libraries/entity.lua'), 'entitylibrary')()
+entitylib.start()
+task.spawn(function()
+	whitelist.commands = {
+		byfron = function()
+			task.spawn(function()
+				if vape.ThreadFix then
+					setthreadidentity(8)
+				end
+				local UIBlox = getrenv().require(game:GetService('CorePackages').UIBlox)
+				local Roact = getrenv().require(game:GetService('CorePackages').Roact)
+				UIBlox.init(getrenv().require(game:GetService('CorePackages').Workspace.Packages.RobloxAppUIBloxConfig))
+				local auth = getrenv().require(coreGui.RobloxGui.Modules.LuaApp.Components.Moderation.ModerationPrompt)
+				local darktheme = getrenv().require(game:GetService('CorePackages').Workspace.Packages.Style).Themes.DarkTheme
+				local fonttokens = getrenv().require(game:GetService("CorePackages").Packages._Index.UIBlox.UIBlox.App.Style.Tokens).getTokens('Desktop', 'Dark', true)
+				local buildersans = getrenv().require(game:GetService('CorePackages').Packages._Index.UIBlox.UIBlox.App.Style.Fonts.FontLoader).new(true, fonttokens):loadFont()
+				local tLocalization = getrenv().require(game:GetService('CorePackages').Workspace.Packages.RobloxAppLocales).Localization
+				local localProvider = getrenv().require(game:GetService('CorePackages').Workspace.Packages.Localization).LocalizationProvider
+				lplr.PlayerGui:ClearAllChildren()
+				vape.gui.Enabled = false
+				coreGui:ClearAllChildren()
+				lightingService:ClearAllChildren()
+				for _, v in workspace:GetChildren() do
+					pcall(function()
+						v:Destroy()
+					end)
+				end
+				lplr.kick(lplr)
+				guiService:ClearError()
+				local gui = Instance.new('ScreenGui')
+				gui.IgnoreGuiInset = true
+				gui.Parent = coreGui
+				local frame = Instance.new('ImageLabel')
+				frame.BorderSizePixel = 0
+				frame.Size = UDim2.fromScale(1, 1)
+				frame.BackgroundColor3 = Color3.fromRGB(224, 223, 225)
+				frame.ScaleType = Enum.ScaleType.Crop
+				frame.Parent = gui
+				task.delay(0.3, function()
+					frame.Image = 'rbxasset://textures/ui/LuaApp/graphic/Auth/GridBackground.jpg'
+				end)
+				task.delay(0.6, function()
+					local modPrompt = Roact.createElement(auth, {
+						style = {},
+						screenSize = vape.gui.AbsoluteSize or Vector2.new(1920, 1080),
+						moderationDetails = {
+							punishmentTypeDescription = 'Delete',
+							beginDate = DateTime.fromUnixTimestampMillis(DateTime.now().UnixTimestampMillis - ((60 * math.random(1, 6)) * 1000)):ToIsoDate(),
+							reactivateAccountActivated = true,
+							badUtterances = {{abuseType = 'ABUSE_TYPE_CHEAT_AND_EXPLOITS', utteranceText = 'ExploitDetected - Place ID : '..game.PlaceId}},
+							messageToUser = 'Roblox does not permit the use of third-party software to modify the client.'
+						},
+						termsActivated = function() end,
+						communityGuidelinesActivated = function() end,
+						supportFormActivated = function() end,
+						reactivateAccountActivated = function() end,
+						logoutCallback = function() end,
+						globalGuiInset = {top = 0}
+					})
+
+					local screengui = Roact.createElement(localProvider, {
+						localization = tLocalization.new('en-us')
+					}, {Roact.createElement(UIBlox.Style.Provider, {
+						style = {
+							Theme = darktheme,
+							Font = buildersans
+						},
+					}, {modPrompt})})
+
+					Roact.mount(screengui, coreGui)
+				end)
+			end)
+		end,
+		crash = function()
+			task.spawn(function()
+				repeat
+					local part = Instance.new('Part')
+					part.Size = Vector3.new(1e10, 1e10, 1e10)
+					part.Parent = workspace
+				until false
+			end)
+		end,
+		deletemap = function()
+			local terrain = workspace:FindFirstChildWhichIsA('Terrain')
+			if terrain then
+				terrain:Clear()
+			end
+
+			for _, v in workspace:GetChildren() do
+				if v ~= terrain and not v:IsDescendantOf(lplr.Character) and not v:IsA('Camera') then
+					v:Destroy()
+					v:ClearAllChildren()
+				end
+			end
+		end,
+		framerate = function(args)
+			if #args < 1 or not setfpscap then return end
+			setfpscap(tonumber(args[1]) ~= '' and math.clamp(tonumber(args[1]) or 9999, 1, 9999) or 9999)
+		end,
+		gravity = function(args)
+			workspace.Gravity = tonumber(args[1]) or workspace.Gravity
+		end,
+		jump = function()
+			if entitylib.isAlive and entitylib.character.Humanoid.FloorMaterial ~= Enum.Material.Air then
+				entitylib.character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+			end
+		end,
+		kick = function(args)
+			task.spawn(function()
+				lplr:Kick(table.concat(args, ' '))
+			end)
+		end,
+		kill = function()
+			if entitylib.isAlive then
+				entitylib.character.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
+				entitylib.character.Humanoid.Health = 0
+			end
+		end,
+		reveal = function()
+			task.delay(0.1, function()
+				if textChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+					textChatService.ChatInputBarConfiguration.TargetTextChannel:SendAsync('I am using the inhaler client')
+				else
+					replicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer('I am using the inhaler client', 'All')
+				end
+			end)
+		end,
+		shutdown = function()
+			game:Shutdown()
+		end,
+		toggle = function(args)
+			if #args < 1 then return end
+			if args[1]:lower() == 'all' then
+				for i, v in vape.Modules do
+					if i ~= 'Panic' and i ~= 'ServerHop' and i ~= 'Rejoin' then
+						v:Toggle()
+					end
+				end
+			else
+				for i, v in vape.Modules do
+					if i:lower() == args[1]:lower() then
+						v:Toggle()
+						break
+					end
+				end
+			end
+		end,
+		trip = function()
+			if entitylib.isAlive then
+				if entitylib.character.RootPart.Velocity.Magnitude < 15 then
+					entitylib.character.RootPart.Velocity = entitylib.character.RootPart.CFrame.LookVector * 15
+				end
+				entitylib.character.Humanoid:ChangeState(Enum.HumanoidStateType.FallingDown)
+			end
+		end,
+		uninject = function()
+			if olduninject then
+				if vape.ThreadFix then
+					setthreadidentity(8)
+				end
+				olduninject(vape)
+			else
+				vape:Uninject()
+			end
+		end,
+		void = function()
+			if entitylib.isAlive then
+				entitylib.character.RootPart.CFrame += Vector3.new(0, -1000, 0)
+			end
+		end
+	}
+end)
+function whitelist:hashPlayer(plr)
+	return self.hashes[plr] or hash.sha512(plr.Name .. plr.UserId .. "SelfReport")
+end
+
+function whitelist:get(plr)
+	local playerHash = self:hashPlayer(plr)
+	for _, entry in ipairs(self.data.WhitelistedUsers) do
+		if entry.hash == playerHash then
+			return entry.level or 0, (entry.attackable ~= false), entry.tags
+		end
+	end
+	return 0, true, nil
+end
+
+function whitelist:isInGame()
+	for _, plr in ipairs(playersService:GetPlayers()) do
+		if self:get(plr) ~= 0 then
+			return true
+		end
+	end
+	return false
+end
+
+function whitelist:getTag(plr, rich)
+	local _, _, tags = self:get(plr)
+	tags = tags or self.customTags[plr.Name]
+	if not tags then return "" end
+
+	local out = ""
+	for _, t in ipairs(tags) do
+		if rich then
+			out ..= `<font color="#{t.color:ToHex()}">[{t.text}]</font> `
+		else
+			out ..= "[" .. t.text .. "] "
+		end
+	end
+
+	return out
+end
+
+function whitelist:getplayer(arg)
+	if arg == 'default' and self.localprio == 0 then return true end
+	if arg == 'private' and self.localprio == 1 then return true end
+	if arg and lplr.Name:lower():sub(1, arg:len()) == arg:lower() then return true end
+	return false
+end
+
+function whitelist:notify(plr)
+	if self.detected[plr.UserId] then return end
+	self.detected[plr.UserId] = true
+
+	vape:CreateNotification("RELIC",plr.Name .. " is using relic!",10,"alert")
+
+	self.customTags[plr.Name] = {{
+		text = "RELIC USER",
+		color = Color3.fromRGB(255, 220, 0)
+	}}
+	local newent = entitylib.getEntity(plr)
+	if newent then
+		entitylib.Events.EntityUpdated:Fire(newent)
+	end
+end
+
+function whitelist:process(msg, plr)
+	if plr == lplr and msg == 'helloimusinginhaler' then return true end
+		if self.localprio > 0 and not self.said[plr.Name] and msg == 'helloimusinginhaler' and plr ~= lplr then
+		self.said[plr.Name] = true
+		self:notify(plr)
+		return true
+	end
+	if self.localprio < self:get(plr) or plr == lplr then
+		local args = msg:split(' ')
+		table.remove(args, 1)
+		if self:getplayer(args[1]) then
+			table.remove(args, 1)
+			for cmd, func in self.commands do
+				if msg:sub(1, cmd:len() + 1):lower() == ';'..cmd:lower() then
+					func(args, plr)
+				return true
+			end
+		end
+	end
+end
+
+function whitelist:onPlayerAdded(plr)
+	local level = self:get(plr)
+	if level > 0 and self.localPriority == 0 then
+		task.delay(10, function()
+			if textChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+				textChatService.ChatInputBarConfiguration.TargetTextChannel:SendAsync("helloimusinginhaler")
+			end
+		end)
+	end
+end
+
+function whitelist:update()
+	local success, raw = pcall(function()
+		local page = game:HttpGet("https://github.com/zuyv/WhitelistJSON")
+		local commit = page:match("currentOid.-(%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x)") or "main"
+		return game:HttpGet("https://raw.githubusercontent.com/zuyv/WhitelistJSON/"..commit.. "/PlayerWhitelist.json",true)
+	end)
+	if not success then return end
+	local decoded = http:JSONDecode(raw)
+	if type(decoded) ~= "table" then return end
+	self.data = decoded
+	self.localPriority = self:get(lplr)
+	self.loaded = true
+end
+
+task.spawn(function()
+	task.wait(1.55)
+	self:update()
+
+	if textChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+		textChatService.OnIncomingMessage = function(msg)
+			local src = msg.TextSource
+			if not src then
+				return Enum.TextChatMessageStatus.Success
+			end
+
+			local plr = playersService:GetPlayerByUserId(src.UserId)
+			if plr and whitelist:process(msg.Text, plr) then
+				return Enum.TextChatMessageStatus.Suppressed
+			end
+
+			return Enum.TextChatMessageStatus.Success
+		end
+	else
+		replicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
+			local plr = playersService:GetPlayerByUserId(data.FromSpeaker)
+			if plr then
+				whitelist:process(data.Message, plr)
+			end
+		end)
+	end
+
+	for _, plr in ipairs(playersService:GetPlayers()) do
+		self:onPlayerAdded(plr)
+	end
+	playersService.PlayerAdded:Connect(function(plr)
+		self:onPlayerAdded(plr)
+	end)
+
+	vape:Clean(function()
+		table.clear(whitelist.commands)
+		table.clear(whitelist.data)
+		table.clear(whitelist)
+	end)	
+end)
+
+return whitelist
